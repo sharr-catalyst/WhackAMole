@@ -1,6 +1,11 @@
+# Ignore local database files
+*.db
+leaderboard.db
+
+# Ignore Python cache folders
 __pycache__/
 *.pyc
-*.db
-*.sqlite3
-.venv/
+
+# Ignore local virtual environments
 venv/
+.venv/
