@@ -15,8 +15,10 @@
         body {
             font-family: 'Press Start 2P', monospace;
             text-align: center;
-            background-color: #2F4F4F;
+            background-color: #00194C;
+            /* Your deep navy blue */
             color: #D3D3D3;
+            /* Your light gray text */
             padding: 20px;
             font-size: 12px;
         }
@@ -43,6 +45,7 @@
             background: #000;
             padding: 10px;
             border: 4px solid #D3D3D3;
+            /* Gray accent borders */
         }
 
         /* Arcade Cabinet Game Box Wrapper */
@@ -53,12 +56,12 @@
             position: relative;
             overflow: hidden;
             background-color: #111;
-            /* 8-bit chunky border styling using your palette */
-            border: 8px solid #A0522D;
+            /* 8-bit chunky frame using your brick red #C0392B */
+            border: 8px solid #C0392B;
             box-shadow: 0px 12px 0px #000;
         }
 
-        /* Retro Pop-in Animation for targets */
+        /* Retro Pop-in Animation */
         @keyframes pixelPop {
             0% {
                 transform: scale(0);
@@ -73,7 +76,8 @@
         #click-btn {
             position: absolute;
             padding: 12px 16px;
-            background-color: #8B0000;
+            background-color: #DC0000;
+            /* Your fiery crimson red */
             color: white;
             font-family: 'Press Start 2P', monospace;
             font-size: 10px;
@@ -84,16 +88,17 @@
             box-shadow: 0 6px 0px #000;
         }
 
-        /* Juice: Physical click feedback mechanics */
+        /* Juice: Physical press indentation mechanics */
         #click-btn:active {
             transform: translateY(6px);
             box-shadow: 0 0px 0px #000;
         }
 
-        /* Custom over-rides for elements to match palette */
-        .nes-btn.is-success {
-            background-color: #228B22 !important;
-            color: #fff !important;
+        /* Menu Start button override using your arcade yellow #F0C020 */
+        .nes-btn.custom-start {
+            background-color: #F0C020 !important;
+            color: #000 !important;
+            border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="3" height="3"><rect x="1" y="0" width="1" height="1" fill="%23000"/><rect x="0" y="1" width="1" height="1" fill="%23000"/><rect x="2" y="1" width="1" height="1" fill="%23000"/><rect x="1" y="2" width="1" height="1" fill="%23000"/></svg>') !important;
         }
 
         .leaderboard-box {
@@ -101,6 +106,13 @@
             margin: 30px auto;
             background-color: #111 !important;
             text-align: left;
+            border: 4px solid #D3D3D3 !important;
+        }
+
+        /* Match leaderboard box heading wrapper to body navy background */
+        .leaderboard-box .title {
+            background-color: #00194C !important;
+            color: #fff !important;
         }
 
         .leaderboard-item {
@@ -125,7 +137,7 @@
 
 <body>
 
-    <h1><i data-lucide="gamepad-2" class="icon-vertical-align"></i> PYTHON REFLEX</h1>
+    <h1><i data-lucide="gamepad-2" class="icon-vertical-align"></i> WHACK-A-MOLÉ </h1>
 
     <div class="stats-container">
         <div class="stat-badge">
@@ -139,15 +151,14 @@
     </div>
 
     <div id="game-box" class="nes-container">
-        <button id="start-btn" class="nes-btn is-success" style="margin-top: 160px;" onclick="startGame()">
+        <button id="start-btn" class="nes-btn custom-start" style="margin-top: 160px;" onclick="startGame()">
             <i data-lucide="play" class="icon-vertical-align"></i> START GAME
         </button>
         <button id="click-btn" onclick="scorePoint()">HIT!</button>
     </div>
 
     <div class="nes-container is-dark with-title leaderboard-box">
-        <p class="title" style="background-color: #2F4F4F;"><i data-lucide="trophy" class="icon-vertical-align"></i> TOP
-            5</p>
+        <p class="title"><i data-lucide="trophy" class="icon-vertical-align"></i> TOP 5</p>
         <ul id="leaderboard" style="list-style: none; padding: 0; margin: 0;">
         </ul>
     </div>
@@ -182,17 +193,19 @@
             score++;
             document.getElementById('score-val').innerText = score;
 
-            // Core Juice: Force a clone and redraw to trigger pop animation every single bounce
-            const clone = clickBtn.cloneNode(true);
-            clickBtn.parentNode.replaceChild(clone, clickBtn);
+            // Re-fetch current button instance actively floating in the layout trees
+            const currentBtn = document.getElementById('click-btn');
 
-            // Re-assign listeners to the fresh clone element
+            // Build a cloned child instance to force-refresh our micro pop physics layers
+            const clone = currentBtn.cloneNode(true);
+            currentBtn.parentNode.replaceChild(clone, currentBtn);
+
+            // Bind actions directly back onto target node wrapper references
             clone.addEventListener('click', scorePoint);
             moveButton(clone);
         }
 
-        function moveButton(targetElement = clickBtn) {
-            // Adjusted boundaries so the button doesn't clip past the 8px border walls
+        function moveButton(targetElement = document.getElementById('click-btn')) {
             const x = Math.random() * (400 - 110);
             const y = Math.random() * (400 - 65);
             targetElement.style.left = `${x}px`;
@@ -201,12 +214,11 @@
         }
 
         async function endGame() {
-            // Target elements lookups change due to the cloning structure in execution
             const currentClickBtn = document.getElementById('click-btn');
             currentClickBtn.style.display = 'none';
             startBtn.style.display = 'inline-block';
             startBtn.innerHTML = '<i data-lucide="refresh-cw" class="icon-vertical-align"></i> AGAIN?';
-            lucide.createIcons(); // Keep icons crisp on refresh string re-render
+            lucide.createIcons();
 
             const username = prompt(`GAME OVER!\nFINAL SCORE: ${score}\n\nENTER YOUR INITIALS/NAME:`) || "ANON";
 
@@ -229,12 +241,11 @@
                 leaderboard.innerHTML += `
                     <li class="leaderboard-item">
                         <span>${idx + 1}. ${entry.username}</span> 
-                        <span style="color: #228B22">${entry.score} PTS</span>
+                        <span style="color: #F0C020">${entry.score} PTS</span>
                     </li>`;
             });
         }
 
-        // Initialize Lucide vector graphics layer on layout ready
         window.onload = () => {
             loadLeaderboard();
             lucide.createIcons();
