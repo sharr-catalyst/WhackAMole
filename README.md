@@ -1,10 +1,10 @@
-# 🐹 WackAMole
+# WackAMole
 
 A modern, interactive, and visually stunning web-based Whack-a-Mole game featuring a sleek user interface, smooth micro-animations, and a Python-powered backend leaderboard system.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Dynamic Gameplay**: Fast-paced, classic Whack-a-Mole experience with randomized mole appearances, speed scaling, and interactive animations.
 - **Modern UI/UX**: Premium aesthetics with curated glassmorphism styling, a dark mode color palette, smooth transitions, and responsive design for all screen sizes.
@@ -14,7 +14,7 @@ A modern, interactive, and visually stunning web-based Whack-a-Mole game featuri
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Frontend**:
   - HTML5 (Semantic structure)
@@ -38,7 +38,7 @@ WackAMole/
 
 ---
 
-## 🚦 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
