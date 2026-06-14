@@ -3,7 +3,7 @@
 An 8-bit interactive web arcade game built as a coping mechanism for myself (as a 55er) to vent race weekend vexation.
 FIX the goddamn car jv
 
-**Web App**: [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://whack-a-james.onrender.com)
+**Web App**: [![Live App](https://img.shields.io/badge/Render-Live%20App-46E3B7?logo=render&logoColor=white)](https://whack-a-james.onrender.com)
 ![Game Preview](wajv.png)
 ---
 
