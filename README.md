@@ -1,86 +1,40 @@
-# WackAMole
+# Whack-A-James (Arcade Reflex Clicker)
 
-A modern, interactive, and visually stunning web-based Whack-a-Mole game featuring a sleek user interface, smooth micro-animations, and a Python-powered backend leaderboard system.
+An 8-bit interactive web arcade game built as a coping mechanism for myself (as a 55er) to vent race weekend vexation.
+FIX the goddamn car jv
+
+🎯 **Web App**: [https://whack-a-james.onrender.com](https://whack-a-james.onrender.com)
 
 ---
 
 ## Features
-
-- **Dynamic Gameplay**: Fast-paced, classic Whack-a-Mole experience with randomized mole appearances, speed scaling, and interactive animations.
-- **Modern UI/UX**: Premium aesthetics with curated glassmorphism styling, a dark mode color palette, smooth transitions, and responsive design for all screen sizes.
-- **Score Tracking**: Real-time score counting, combo indicators, and a persistent leaderboard system.
-- **Python Backend**: A lightweight Python backend (`app.py`) for managing high scores, handling API requests for the leaderboard, and storing scores securely.
-- **Audio Feedback**: Immersive sound effects for whack hits, misses, and game-over states (customizable/toggleable).
+- **8-Bit Retro Aesthetic**: Built with the `nes.css` framework and the `Press Start 2P` font.
+- **Dynamic Hammer Cursor**: Changes to a `🔨` over the board and tilts `-45°` when clicking.
+- **Physical Game Juice**: Every hit triggers a violent screen shake and a gold **"SMASH!"** pop-up.
+- **Python Backend**: Fast Flask API managing a persistent global top-5 SQLite leaderboard.
 
 ---
 
-## Technology Stack
-
-- **Frontend**:
-  - HTML5 (Semantic structure)
-  - Vanilla CSS3 (Custom variables, modern layout, animations)
-  - JavaScript (ES6+, DOM manipulation, game loop logic)
-- **Backend**:
-  - Python 3 (Flask or FastAPI)
-  - SQLite (Lightweight database for leaderboard data persistence)
+##  Tech & Icon Stack
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+).
+- **UI Framework**: NES.css (v2.3.0).
+- **Icons**: Lucide Icons (`gamepad-2`, `target`, `timer`, `play`, `refresh-cw`, `trophy`).
+- **Backend & Database**: Python 3, Flask, SQLite3, Gunicorn.
 
 ---
 
-## 📁 Project Structure
+## 🚀 Local Setup
 
-```text
-WackAMole/
-├── app.py             # Python backend server (API & database handlers)
-├── index.html         # Frontend game interface & scripts
-├── .gitignore         # Git ignore rules
-└── README.md          # Project documentation (this file)
-```
+```bash
+# Clone and enter repo
+git clone [https://github.com/sharr-catalyst/WhackAMole.git](https://github.com/sharr-catalyst/WhackAMole.git)
+cd WackAMole
 
----
+# Setup environment & install packages
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
 
-##  Getting Started
 
-### Prerequisites
-
-- A modern web browser.
-- **Python 3.x** (optional, required only if running the leaderboard backend).
-
-### Setup and Running
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/sharr-catalyst/WackAMole.git
-   cd WackAMole
-   ```
-
-2. **Run the Frontend (Directly)**:
-   - Simply double-click `index.html` or use a local development server extension (e.g., Live Server in VS Code) to launch the game interface.
-
-3. **Run the Backend (Leaderboard API)**:
-   - Create a virtual environment and install requirements (e.g., Flask):
-     ```bash
-     python -m venv venv
-     ./venv/Scripts/activate # Windows
-     pip install Flask
-     ```
-   - Start the backend server:
-     ```bash
-     python app.py
-     ```
-   - Open `index.html` in your browser. The game will automatically detect and sync high scores with the running local server.
-
----
-
-## 🎮 How to Play
-
-1. Click **Start Game** to initiate the timer.
-2. Moles will randomly pop out of the dirt mounds.
-3. Click (or tap) on the mole before it retreats back into its hole.
-4. Each successful whack awards you points. Avoid hitting empty mounds, as it might deduct points or break your combo multiplier!
-5. Try to achieve the highest score before the timer runs out and secure your spot on the leaderboard!
-
----
-
-## 🎨 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+# Run server
+python app.py
