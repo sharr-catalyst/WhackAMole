@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request, render_template
 import sqlite3
 import os 
+
 app = Flask(__name__, template_folder='.') # Serves HTML from the same directory
 
 DB_FILE = 'leaderboard.db'
@@ -48,8 +49,10 @@ def save_score():
     return jsonify({"status": "success", "message": "Score saved!"}), 201
 
 
+# CRITICAL FIX: Run this out in the open so Gunicorn executes it on Render startup!
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     # Gets the port from the cloud provider, defaults to 5000 locally
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
