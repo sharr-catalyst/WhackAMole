@@ -3,7 +3,7 @@
 An 8-bit interactive web arcade game built as a coping mechanism for myself (as a 55er) to vent race weekend vexation.
 FIX the goddamn car jv
 
-🎯 **Web App**: [https://whack-a-james.onrender.com](https://whack-a-james.onrender.com)
+**Web App**: [https://whack-a-james.onrender.com](https://whack-a-james.onrender.com)
 ![Game Preview](wajv.png)
 ---
 
@@ -23,7 +23,7 @@ FIX the goddamn car jv
 
 ---
 
-## 🚀 Local Setup
+## Local Setup
 
 ```bash
 # Clone and enter repo
