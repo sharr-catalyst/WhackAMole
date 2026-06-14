@@ -245,7 +245,7 @@
         <button id="start-btn" class="nes-btn custom-start" style="margin-top: 160px;" onclick="startGame()">
             <i data-lucide="play" class="icon-vertical-align"></i> START GAME
         </button>
-        <button id="click-btn" onclick="scorePoint(event)">JAMES VOWLES</button>
+        <button id="click-btn">JAMES VOWLES</button>
     </div>
 
     <div class="nes-container is-dark with-title leaderboard-box">
@@ -258,8 +258,10 @@
         let score = 0;
         let timeLeft = 10;
         let gameInterval;
-        const clickBtn = document.getElementById('click-btn');
         const startBtn = document.getElementById('start-btn');
+
+        // Wire up original button via addEventListener (not inline onclick)
+        document.getElementById('click-btn').addEventListener('click', (e) => scorePoint(e));
 
         function startGame() {
             score = 0;
@@ -267,7 +269,7 @@
             document.getElementById('score-val').innerText = score;
             document.getElementById('time-val').innerText = timeLeft;
             startBtn.style.display = 'none';
-            clickBtn.style.display = 'block';
+            document.getElementById('click-btn').style.display = 'block';
             moveButton();
 
             gameInterval = setInterval(() => {
@@ -313,6 +315,7 @@
 
             // 🔄 3. BUILD AND BIND FRESH TARGET NODES
             const clone = currentBtn.cloneNode(true);
+            clone.id = 'click-btn'; // Restore id so getElementById keeps working
             currentBtn.parentNode.replaceChild(clone, currentBtn);
 
             clone.addEventListener('click', (e) => scorePoint(e));
