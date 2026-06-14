@@ -144,6 +144,85 @@
             display: inline-flex;
             align-items: center;
         }
+
+        /* --- JUICE ANIMATIONS --- */
+
+        /* Screen Shake Effect */
+        .shake-cabinet {
+            animation: cabinetVibrate 0.15s linear;
+        }
+
+        @keyframes cabinetVibrate {
+            0% {
+                transform: translate(2px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(0px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(2px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(2px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(0deg);
+            }
+        }
+
+        /* Floating "SMASH!" Text Particle */
+        .smash-particle {
+            position: absolute;
+            color: #F0C020;
+            /* Arcade Gold */
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0px #000;
+            pointer-events: none;
+            /* Stops text from blocking clicks */
+            animation: floatUpAndFade 0.4s ease-out forwards;
+            z-index: 99;
+        }
+
+        @keyframes floatUpAndFade {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-40px) scale(0.8);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -166,7 +245,7 @@
         <button id="start-btn" class="nes-btn custom-start" style="margin-top: 160px;" onclick="startGame()">
             <i data-lucide="play" class="icon-vertical-align"></i> START GAME
         </button>
-        <button id="click-btn" onclick="scorePoint()">JAMES VOWLES</button>
+        <button id="click-btn" onclick="scorePoint(event)">JAMES VOWLES</button>
     </div>
 
     <div class="nes-container is-dark with-title leaderboard-box">
@@ -201,19 +280,42 @@
             }, 1000);
         }
 
-        function scorePoint() {
+        function scorePoint(event) {
             score++;
             document.getElementById('score-val').innerText = score;
 
-            // Re-fetch current button instance actively floating in the layout trees
+            const gameBox = document.getElementById('game-box');
             const currentBtn = document.getElementById('click-btn');
 
-            // Build a cloned child instance to force-refresh our micro pop physics layers
+            // 💥 1. TRIGGER CABINET VIBRATION (SCREEN SHAKE)
+            gameBox.classList.remove('shake-cabinet');
+            void gameBox.offsetWidth; // Force element redraw sequence
+            gameBox.classList.add('shake-cabinet');
+
+            // 💥 2. SPAWN FLOATING "SMASH!" TEXT PARTICLE
+            if (event && event.clientX && event.clientY) {
+                const particle = document.createElement('div');
+                particle.className = 'smash-particle';
+                particle.innerText = 'SMASH!';
+
+                const rect = gameBox.getBoundingClientRect();
+                const x = event.clientX - rect.left - 30; // Centering calculation
+                const y = event.clientY - rect.top - 20;
+
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                gameBox.appendChild(particle);
+
+                // Sweep element out of document memory tree when done
+                setTimeout(() => particle.remove(), 400);
+            }
+
+            // 🔄 3. BUILD AND BIND FRESH TARGET NODES
             const clone = currentBtn.cloneNode(true);
             currentBtn.parentNode.replaceChild(clone, currentBtn);
 
-            // Bind actions directly back onto target node wrapper references
-            clone.addEventListener('click', scorePoint);
+            clone.addEventListener('click', (e) => scorePoint(e));
             moveButton(clone);
         }
 
