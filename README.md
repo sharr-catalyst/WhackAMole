@@ -4,7 +4,7 @@ An 8-bit interactive web arcade game built as a coping mechanism for myself (as 
 FIX the goddamn car jv
 
 🎯 **Web App**: [https://whack-a-james.onrender.com](https://whack-a-james.onrender.com)
-
+![Game Preview](wajv.png)
 ---
 
 ## Features
